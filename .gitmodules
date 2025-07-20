@@ -1,0 +1,18 @@
+[submodule "external/FreeRTOS-Kernel"]
+	path = external/FreeRTOS-Kernel
+	url = https://github.com/raspberrypi/FreeRTOS-Kernel.git
+[submodule "external/pico-extras"]
+	path = external/pico-extras
+	url = https://github.com/raspberrypi/pico-extras.git
+[submodule "external/pico-sdk"]
+	path = external/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
+[submodule "external/pico-playground"]
+	path = external/pico-playground
+	url = https://github.com/raspberrypi/pico-playground.git
+[submodule "external/tinyusb"]
+	path = external/tinyusb
+	url = https://github.com/raspberrypi/tinyusb.git
+[submodule "external/lwip"]
+	path = external/lwip
+	url = https://git.savannah.nongnu.org/git/lwip.git

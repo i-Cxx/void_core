@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.14)
+
+include(FetchContent)
+
+# FreeRTOS automatisch klonen, falls nicht vorhanden
+FetchContent_Declare(
+  FreeRTOS-Kernel
+  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+  GIT_TAG        main
+)
+FetchContent_MakeAvailable(FreeRTOS-Kernel)
+
+# Dein Projekt
+project(my_pico_freertos C CXX)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+# Pico SDK einbinden
+include(pico_sdk_import.cmake)
+pico_sdk_init()
+
+add_executable(my_pico_freertos
+    main.c
+    # weitere Quellfiles
+)
+
+target_include_directories(my_pico_freertos PRIVATE
+  ${FreeRTOS-Kernel_SOURCE_DIR}/include
+  ${FreeRTOS-Kernel_SOURCE_DIR}/portable/GCC/ARM_CM0
+)
+
+target_sources(my_pico_freertos PRIVATE
+  ${FreeRTOS-Kernel_SOURCE_DIR}/list.c
+  ${FreeRTOS-Kernel_SOURCE_DIR}/queue.c
+  ${FreeRTOS-Kernel_SOURCE_DIR}/tasks.c
+  ${FreeRTOS-Kernel_SOURCE_DIR}/timers.c
+  ${FreeRTOS-Kernel_SOURCE_DIR}/portable/MemMang/heap_4.c
+  ${FreeRTOS-Kernel_SOURCE_DIR}/portable/GCC/ARM_CM0/port.c
+)
+
+target_link_libraries(my_pico_freertos pico_stdlib)
+
+pico_add_extra_outputs(my_pico_freertos)
