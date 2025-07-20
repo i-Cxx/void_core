@@ -20,6 +20,7 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Binde die LCD-Bibliothek ein
 add_subdirectory(lcd1602)
 
+add_subdirectory(freertos)
 # Binde die SSD1306-Bibliothek ein
 add_subdirectory(ssd1306)
 

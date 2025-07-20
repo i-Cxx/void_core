@@ -3,12 +3,13 @@ add_library(led_lib STATIC
     led_task_wrapper.cpp
 )
 
-target_include_directories(blink_lib PUBLIC
+target_include_directories(led_lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(blink_lib
+target_link_libraries(led_lib
     pico_stdlib
     hardware_gpio
-    freertos          
+    freertos_kernel 
+    freertos_config          
 )

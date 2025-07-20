@@ -1,6 +1,6 @@
-# Generated Cmake Pico project file
+# src/CMakeLists.txt – für void_universe_core
 
-cmake_minimum_required(VERSION 3.14) # Für FetchContent empfohlen
+cmake_minimum_required(VERSION 3.14)
 
 project(void_universe_core C CXX ASM)
 set(CMAKE_C_STANDARD 11)
@@ -21,31 +21,10 @@ if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
+
 set(PICO_BOARD pico CACHE STRING "Board type")
-set(ENV{FREERTOS_KERNEL_PATH} "${CMAKE_SOURCE_DIR}/external/FreeRTOS-Kernel")
 
-# Pico SDK einbinden
-include(pico_sdk_import.cmake)
-
-
-pico_sdk_init()
-
-
-
-
-add_library(freertos_config INTERFACE)
-target_include_directories(freertos_config SYSTEM 
-        INTERFACE
-            ${CMAKE_SOURCE_DIR}/include
-            include
-)
-    
-
-target_compile_definitions(freertos_config
-      PUBLIC
-      projCOVERAGE_TEST=0)
-
-# Webserver Subdirectory einbinden (erst hier, weil in src/)
+# Webserver Subdirectory einbinden
 add_subdirectory(webserver)
 
 add_executable(void_universe_core 
@@ -55,29 +34,19 @@ add_executable(void_universe_core
 pico_set_program_name(void_universe_core "void_universe_core")
 pico_set_program_version(void_universe_core "0.1")
 
-# Modify the below lines to enable/disable output over UART/USB
+# UART/USB wählen
 pico_enable_stdio_uart(void_universe_core 0)
 pico_enable_stdio_usb(void_universe_core 1)
 
 # Standard-Includes
 target_include_directories(void_universe_core PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
-    ${FREERTOS_KERNEL_PATH}/include
-    ${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040
     ${CMAKE_SOURCE_DIR}/include
 )
 
-# FreeRTOS-Quellcode und Portierungsdateien hinzufügen
-target_sources(void_universe_core PRIVATE
-    ${FREERTOS_KERNEL_PATH}/event_groups.c
-    ${FREERTOS_KERNEL_PATH}/list.c
-    ${FREERTOS_KERNEL_PATH}/queue.c
-    ${FREERTOS_KERNEL_PATH}/stream_buffer.c
-    ${FREERTOS_KERNEL_PATH}/tasks.c
-    ${FREERTOS_KERNEL_PATH}/timers.c
-    ${FREERTOS_KERNEL_PATH}/portable/MemMang/heap_4.c
-    ${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040/port.c
-)
+# Debug-Definitionen
+add_compile_definitions($<$<CONFIG:Debug>:DEBUG=1>)
+target_compile_options(void_universe_core PRIVATE -Wall -Wextra -O2)
 
 # Bibliotheken linken
 target_link_libraries(void_universe_core
@@ -87,21 +56,20 @@ target_link_libraries(void_universe_core
     hardware_i2c
     hardware_timer
 
-    freertos_kernel 
+    # FreeRTOS Kernel (aus lib/freertos)
+    freertos_kernel
+
+    # Webserver und andere Module
     freertos_config
-    
     lwip
     lwipcore
     lwipallapps
-    webserver
+    #webserver
     tinyusb_device
-    
+
     led_lib
     lcd1602_lib
     ssd1306_lib
 )
-
-add_compile_definitions($<$<CONFIG:Debug>:DEBUG=1>)
-target_compile_options(void_universe_core PRIVATE -Wall -Wextra -O2)
 
 pico_add_extra_outputs(void_universe_core)

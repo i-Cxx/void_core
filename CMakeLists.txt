@@ -45,7 +45,7 @@ include(pico_extras_import.cmake)
 pico_sdk_init()
 
 
-add_subdirectory(external/FreeRTOS-Kernel)
+#add_subdirectory(external/FreeRTOS-Kernel)
 add_subdirectory(external/pico-sdk)
 add_subdirectory(external/pico-extras)
 
@@ -54,6 +54,7 @@ add_subdirectory(external/tinyusb)
 
 
 # Eigene Libraries einbinden
+add_subdirectory(lib/freertos)
 add_subdirectory(lib/led)
 add_subdirectory(lib/divcheck)
 add_subdirectory(lib/lcd1602)
