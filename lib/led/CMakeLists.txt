@@ -1,6 +1,6 @@
 add_library(led_lib STATIC
-    led.cpp
-    led_task_wrapper.cpp
+    Led.cpp
+    led_task_wrapper.c     # <--- hier Korrektur von .cpp auf .c
 )
 
 target_include_directories(led_lib PUBLIC

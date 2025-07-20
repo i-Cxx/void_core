@@ -13,7 +13,7 @@ add_library(freertos_kernel
     ${FREERTOS_KERNEL_PATH}/stream_buffer.c
     ${FREERTOS_KERNEL_PATH}/portable/MemMang/heap_4.c
     ${FREERTOS_KERNEL_PATH}/portable/GCC/ARM_CM0/port.c
-    ${PICO_FREERTOS_PORT_PATH}/entry.c
+    #${PICO_FREERTOS_PORT_PATH}/entry.c
 )
 
 target_include_directories(freertos_kernel PUBLIC

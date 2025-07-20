@@ -25,7 +25,7 @@ endif()
 set(PICO_BOARD pico CACHE STRING "Board type")
 
 # Webserver Subdirectory einbinden
-add_subdirectory(webserver)
+#add_subdirectory(webserver)
 
 add_executable(void_universe_core 
     void_universe_core.c 
