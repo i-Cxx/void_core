@@ -39,15 +39,16 @@ set(CMAKE_CXX_STANDARD 17)
 # Pico SDK, Extras  & Kernel importieren
 include(pico_sdk_import.cmake)
 include(pico_extras_import.cmake)
-include(FreeRTOS_Kernel_import.cmake)
+# include(FreeRTOS_Kernel_import.cmake)
 
 
 pico_sdk_init()
 
 
-
+add_subdirectory(external/FreeRTOS-Kernel)
 add_subdirectory(external/pico-sdk)
-add_subdirectory(external/FreeRTOS)
+add_subdirectory(external/pico-extras)
+
 add_subdirectory(external/lwip)
 add_subdirectory(external/tinyusb)
 

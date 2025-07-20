@@ -18,13 +18,15 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Sie bindet alle einzelnen Bibliotheken in diesem Verzeichnis ein.
 
 # Binde die LCD-Bibliothek ein
-add_subdirectory(lcd_1602_i2c)
+add_subdirectory(lcd1602)
 
 # Binde die SSD1306-Bibliothek ein
-add_subdirectory(ssd1306_i2c)
+add_subdirectory(ssd1306)
 
 # Binde Blink Biliothek ein
-add_subdirectory(blink)
+add_subdirectory(led)
+
+add_subdirectory(divcheck)
 
 # --- NEU: Binde die TinyUSB-Bibliothek ein ---
 # Da tinyusb direkt in 'libraries/tinyusb' liegt, verweisen wir darauf.

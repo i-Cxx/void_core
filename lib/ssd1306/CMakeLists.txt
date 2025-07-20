@@ -17,6 +17,6 @@ target_include_directories(ssd1306_i2c_lib PUBLIC
 # Listet die Abhängigkeiten des SSD1306-Treibers auf.
 target_link_libraries(ssd1306_i2c_lib
     pico_stdlib
-    hardware_i2c  # Da der SSD1306-Treiber I2C verwendet
-    hardware_gpio # Falls GPIOs direkt genutzt werden
+    hardware_i2c 
+    hardware_gpio 
 )

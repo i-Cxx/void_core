@@ -15,6 +15,6 @@ target_include_directories(lcd_1602_i2c_lib PUBLIC
 # Dies stellt sicher, dass die benötigten Pico SDK-Komponenten kompiliert und verknüpft werden.
 target_link_libraries(lcd_1602_i2c_lib
     pico_stdlib
-    hardware_i2c  # Da der LCD-Treiber I2C verwendet
-    hardware_gpio # Falls GPIOs direkt genutzt werden (oft für I2C)
+    hardware_i2c 
+    hardware_gpio 
 )

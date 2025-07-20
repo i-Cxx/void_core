@@ -22,29 +22,28 @@ if (EXISTS ${picoVscode})
 endif()
 # ====================================================================================
 set(PICO_BOARD pico CACHE STRING "Board type")
+set(ENV{FREERTOS_KERNEL_PATH} "${CMAKE_SOURCE_DIR}/external/FreeRTOS-Kernel")
 
 # Pico SDK einbinden
 include(pico_sdk_import.cmake)
+
+
 pico_sdk_init()
 
-# FreeRTOS automatisch via FetchContent einbinden
-include(FetchContent)
-FetchContent_Declare(
-  freertos_kernel
-  GIT_REPOSITORY https://github.com/raspberrypi/FreeRTOS-Kernel.git
-  GIT_TAG        main # Besser: Einen stabilen Tag oder Commit wählen!
-)
-FetchContent_MakeAvailable(freertos_kernel)
 
-# FreeRTOS Port für RP2040: portable/ThirdParty/GCC/RP2040
-set(FREERTOS_KERNEL_PATH ${freertos_kernel_SOURCE_DIR})
-# set(ENV{FREERTOS_KERNEL_PATH} "${CMAKE_SOURCE_DIR}/external/FreeRTOS-Kernel-RPi")
 
 
 add_library(freertos_config INTERFACE)
-target_include_directories(freertos_config INTERFACE
-    ${CMAKE_SOURCE_DIR}/include
+target_include_directories(freertos_config SYSTEM 
+        INTERFACE
+            ${CMAKE_SOURCE_DIR}/include
+            include
 )
+    
+
+target_compile_definitions(freertos_config
+      PUBLIC
+      projCOVERAGE_TEST=0)
 
 # Webserver Subdirectory einbinden (erst hier, weil in src/)
 add_subdirectory(webserver)
@@ -87,12 +86,16 @@ target_link_libraries(void_universe_core
     hardware_gpio
     hardware_i2c
     hardware_timer
+
+    freertos_kernel 
     freertos_config
+    
     lwip
     lwipcore
     lwipallapps
     webserver
     tinyusb_device
+    
     led_lib
     lcd1602_lib
     ssd1306_lib
